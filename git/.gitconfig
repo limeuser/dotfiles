@@ -1,0 +1,5 @@
+[user]
+	name = thamaraiselvam
+	email = thamaraiselvam@live.com
+[includeIf "gitdir:~/Documents/repositories/source.golabs.io/"]
+	path = .gitconfig.gojek
