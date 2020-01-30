@@ -135,3 +135,7 @@ export PATH=$PATH:$GOROOT/binP
 export DISABLE_AUTO_TITLE='true'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+<<<<<<< HEAD
+=======
+
+>>>>>>> Add git, starship, tmux and zsh configurations
