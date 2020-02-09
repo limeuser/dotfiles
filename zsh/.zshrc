@@ -8,8 +8,8 @@ export ZSH="/Users/thamaraiselvam/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
 
+eval "$(starship init zsh)"
 #auto complete deletion issue on alacritty
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -121,6 +121,12 @@ source <(stern --completion=zsh)
 
 for file in ~/.aliases/.*; do source $file; done
 
+#pet cli snippet manager changes
+
+zle -N pet-select
+stty -ixon
+bindkey '^s' pet-select
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/Users/thamaraiselvam/development/flutter/bin"
@@ -135,7 +141,4 @@ export PATH=$PATH:$GOROOT/binP
 export DISABLE_AUTO_TITLE='true'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-<<<<<<< HEAD
-=======
 
->>>>>>> Add git, starship, tmux and zsh configurations
