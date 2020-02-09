@@ -1,0 +1,60 @@
+function previewSelection() {
+    directory=$1
+    if [ ! -z  "$directory" ]; then
+        if [ ! -d "$directory" ]; then
+            # cat but with syntax highlighting
+            bat --color=always "$directory"
+        else
+            # ls with colors and git-aware
+            exa --color=always -l --git --git-ignore -h $directory
+        fi
+    fi
+}
+
+function godir() {
+    directory=$(fd -d 5 . ${HOME}/ | fzf --color 16 --preview "source ~/.zshrc && previewSelection {}" )
+    if [ ! -z  "$directory" ]; then
+        if [ ! -d "$directory" ]; then
+            # Its a file. cd to the directory.
+            cd $(dirname "$directory")
+        else
+            # cd to the directory
+            cd $directory
+        fi
+    fi
+}
+
+function mkcdir () {
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"
+}
+
+function docker_clean() {
+  # docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+  # docker rmi -f $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+  docker system prune --volumes -f
+}
+
+function tmuxclr(){
+    tmux ls | awk '{print "tmux kill-session -t " substr($1, length(0), (length($1) - 1))}' | bash
+}
+
+function tkill(){
+  tmux list-sessions | rg -v attached | awk '{print $1}' | sed 's/://g' | fzf -m | xargs -I {} tmux kill-session -t {}
+}
+
+function ktx(){
+      fd .  -t f -e yaml ~/.tmuxp --exec echo {/.} | fzf --bind 'enter:execute-silent(tmuxp load --yes {1})+abort'
+}
+
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
+
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+
